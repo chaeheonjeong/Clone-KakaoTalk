@@ -1,0 +1,46 @@
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+public class ImageFrame extends JFrame {
+	private Image big_img;
+	
+	public ImageFrame(ImageIcon img) {
+		Image ori_image = img.getImage();
+		
+		int height = img.getIconHeight();
+		int width = img.getIconWidth();
+		double ratio;
+		
+		setBounds(100, 100, 450, 300);
+		if(height > 700 || width > 700) {
+			if (width > height) { // 가로 사진
+				ratio = (double) height / width;
+				width = 500;
+				height = (int) (width * ratio);
+			} else { // 세로 사진
+				ratio = (double) width / height;
+				height = 500;
+				width = (int) (height * ratio);
+			}
+		}
+		
+		big_img = ori_image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		
+		setSize(width,height);
+		setVisible(true);
+		setResizable(false);
+		
+		
+	}
+	
+	public void paint(Graphics g) {//그리는 함수
+		g.drawImage(big_img, 0, 0, null);//background를 그려줌
+	}
+
+}

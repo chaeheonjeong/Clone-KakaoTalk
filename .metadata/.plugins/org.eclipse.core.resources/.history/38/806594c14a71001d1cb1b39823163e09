@@ -1,0 +1,59 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class ClientEmoPanel extends JPanel {
+	private ImageIcon emoticon;
+	private int size;
+	
+	public ClientEmoPanel(String nowDate, ImageIcon emoticon, ImageIcon img, ImageIcon ori_img) {
+		setOpaque(false);
+		this.emoticon = emoticon;
+		setLayout(null);
+		
+		JLabel lblTime = new JLabel(nowDate);
+		lblTime.setFont(new Font("맑은 고딕", Font.PLAIN, 10));
+		add(lblTime);
+		
+		JPanel bundlePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		bundlePanel.setOpaque(false);
+		if(img == null) {
+			size=150;
+			JLabel lblEmoticon = new JLabel(emoticon);
+			bundlePanel.add(lblEmoticon);
+			bundlePanel.setBounds(210, 10, 150, 150);
+			add(bundlePanel);
+			lblTime.setBounds(195, 100, 52, 14);
+		}
+		if(emoticon == null) {
+			int height = img.getIconHeight();
+			int width = img.getIconWidth();
+			
+			size = height + 50;
+			
+			JLabel lablImg = new JLabel(img);
+			bundlePanel.add(lablImg);
+			bundlePanel.setBounds(350-width, 10, width +50, size);
+			add(bundlePanel);
+			lblTime.setBounds(290-width, height, 52, 14);
+			
+			lablImg.addMouseListener(new MouseAdapter() { // 메세지 전송 버튼
+				public void mouseClicked(MouseEvent e) {
+					ImageFrame ImgFrame = new ImageFrame(ori_img);
+				}
+			});
+		}
+		
+	}
+
+	public int get_size() {
+		return size;
+	}
+}

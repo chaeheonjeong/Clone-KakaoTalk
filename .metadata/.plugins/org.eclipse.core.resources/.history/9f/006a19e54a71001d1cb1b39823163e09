@@ -1,0 +1,87 @@
+import javax.swing.JPanel;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class FriendEmoPanel extends JPanel {
+	private int size;
+	public FriendEmoPanel(String username, ImageIcon profile, String nowDate, ImageIcon emoticon, ImageIcon img, ImageIcon ori_img) {
+		setLayout(null);
+		setOpaque(false);
+		//setBackground(new Color(255,0,0,0)); //투명
+		
+		Image ori_profile = profile.getImage();
+		Image update = ori_profile.getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+		ImageIcon ud_profile = new ImageIcon(update);
+		
+		JLabel lblProfile = new JLabel(ud_profile);
+		lblProfile.setBounds(12, 10, 45, 45);
+		add(lblProfile);
+		
+		JLabel lblName = new JLabel(username);
+		lblName.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		lblName.setBounds(70, 8, 83, 22);
+		add(lblName);
+		
+		JLabel lblTime = new JLabel(nowDate);
+		lblTime.setFont(new Font("맑은 고딕", Font.PLAIN, 10));
+		add(lblTime);
+		
+		JPanel bundlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		bundlePanel.setOpaque(false);
+		
+		if(img == null) {
+			size=150;
+			JLabel lblEmoticon = new JLabel(emoticon);
+			bundlePanel.add(lblEmoticon);
+			bundlePanel.setBounds(55, 30, 150, 150);
+			add(bundlePanel);
+			lblTime.setBounds(165, 115, 52, 14);
+		}
+		
+		if(emoticon == null) {
+			int height = img.getIconHeight();
+			int width = img.getIconWidth();
+			
+			size = height + 50;
+			
+			JLabel lblImg = new JLabel(img);
+			bundlePanel.add(lblImg);
+			bundlePanel.setBounds(55, 30, width +50 , size);
+			add(bundlePanel);
+			lblTime.setBounds(width+60, height+20, 52, 14);
+			
+			lblImg.addMouseListener(new MouseAdapter() { // 메세지 전송 버튼
+				public void mouseClicked(MouseEvent e) {
+					ImageFrame ImgFrame = new ImageFrame(ori_img);
+				}
+			});
+		}
+		
+		
+	}
+	public int get_size() {
+		return size;
+	}
+}

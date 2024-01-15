@@ -1,0 +1,34 @@
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+public class ImageFrame extends JFrame {
+	private Image ori_image;
+	
+	public ImageFrame(ImageIcon img) {
+		
+		int height = img.getIconHeight();
+		int width = img.getIconWidth();
+		
+		setBounds(100, 100, 450, 300);
+		if(height > 500 || width > 500)
+			setSize(width*1/5, height*1/5);
+		else
+			setSize(width, height);
+		setVisible(true);
+		setResizable(false);
+		System.out.println(img);
+		
+		this.ori_image = img.getImage();
+	}
+	
+	public void paint(Graphics g) {//그리는 함수
+		g.drawImage(ori_image, 0, 0, null);//background를 그려줌
+	}
+
+}
